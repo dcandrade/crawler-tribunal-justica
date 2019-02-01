@@ -54,6 +54,7 @@ class TestPageLoad(unittest.TestCase):
         ["tests/1002298-86.2015.8.26.0271 - TJSP.json"],
     ])
     def test_get_data(self, data_file):
+        process_number, court = data_file.strip('.json').split(" - ")
         crawler = self.get_crawler(court)
 
         data = crawler.run(process_number)
@@ -64,6 +65,8 @@ class TestPageLoad(unittest.TestCase):
         
 
         self.assertEqual(sorted(reference_data.items()), sorted(data.items()))
+
+
 
 if __name__ == "__main__":
      unittest.main(warnings="ignore")
