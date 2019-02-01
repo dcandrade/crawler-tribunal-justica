@@ -1,0 +1,273 @@
+{
+   "Área" : "Cível",
+   "Controle" : "2018/000760",
+   "Autora:" : [
+      {
+         "Representantes" : [
+            {
+               "Nome" : "Adriana Catelan Skowronski",
+               "Atribuição" : "Advogada"
+            },
+            {
+               "Atribuição" : "Advogada",
+               "Nome" : "Ana Silvia Pessoa Salgado de Moura"
+            }
+         ],
+         "Nome" : "Leidi Silva Ormond Galvão"
+      },
+      {
+         "Representantes" : [
+            {
+               "Atribuição" : "Advogada",
+               "Nome" : "Adriana Catelan Skowronski"
+            },
+            {
+               "Nome" : "Ana Silvia Pessoa Salgado de Moura",
+               "Atribuição" : "Advogada"
+            }
+         ],
+         "Nome" : "Melissa Chaves Miranda"
+      },
+      {
+         "Nome" : "Ruzymar Campos de Oliveira",
+         "Representantes" : [
+            {
+               "Atribuição" : "Advogada",
+               "Nome" : "Adriana Catelan Skowronski"
+            },
+            {
+               "Nome" : "Ana Silvia Pessoa Salgado de Moura",
+               "Atribuição" : "Advogada"
+            }
+         ]
+      }
+   ],
+   "Assunto" : "Enquadramento",
+   "Classe" : "Procedimento Comum",
+   "Processo" : "0821901-51.2018.8.12.0001",
+   "Juiz" : "Zidiel Infantino Coutinho",
+   "Valor da ação" : "R$ 10.000,00",
+   "Réu:" : [
+      {
+         "Representantes" : [
+            {
+               "Nome" : "Procuradoria Geral do Estado de Mato Grosso do Sul",
+               "Atribuição" : "RepreLeg"
+            }
+         ],
+         "Nome" : "Estado de Mato Grosso do Sul"
+      }
+   ],
+   "Movimentações" : [
+      {
+         "Título" : "Informação do Sistema",
+         "Descrição" : "PJMS - Certidão de realização de consulta de repetiçaõ de ação",
+         "Data" : "25/11/2018"
+      },
+      {
+         "Título" : "Realizada pesquisa de suspeita de repetição de ação",
+         "Data" : "25/11/2018",
+         "Descrição" : "Nenhum processo localizado"
+      },
+      {
+         "Título" : "Em Cartório-p/ Escrivão/Diretor preparar Conclusão",
+         "Data" : "22/10/2018",
+         "Descrição" : ""
+      },
+      {
+         "Data" : "10/10/2018",
+         "Descrição" : "Nº Protocolo: WCGR.18.08405509-7 Tipo da Petição: Manifestação do Autor Data: 09/10/2018 14:59",
+         "Título" : "Juntada de Petição Intermediária Realizada"
+      },
+      {
+         "Data" : "05/10/2018",
+         "Descrição" : "Relação :0273/2018 Data da Publicação: 08/10/2018 Número do Diário: 4126",
+         "Título" : "Publicado ato publicado em data da publicação."
+      },
+      {
+         "Título" : "Relação encaminhada ao D.J.",
+         "Data" : "05/10/2018",
+         "Descrição" : "Relação: 0273/2018 Teor do ato: Especifiquem as partes, no prazo de 05 (cinco) dias, se há interesse em produção de provas, indicando-as e requerendo-as expressamente, a fim de se verificar a pertinência e a necessidade delas. O silêncio importará no julgamento antecipado do pedido. Advogados(s): Ana Silvia Pessoa Salgado de Moura (OAB 7317/MS), Adriana Catelan Skowronski (OAB 10227/MS)"
+      },
+      {
+         "Data" : "05/10/2018",
+         "Descrição" : "",
+         "Título" : "Recebidos os Autos da Procuradoria do Estado"
+      },
+      {
+         "Descrição" : "Nº Protocolo: WCGR.18.01094686-9 Tipo da Petição: Manifestação do Procurador da Fazenda Pública Estadual Data: 05/10/2018 07:43",
+         "Data" : "05/10/2018",
+         "Título" : "Juntada de Petição Intermediária Realizada"
+      },
+      {
+         "Título" : "Certidão Cartorária",
+         "Descrição" : "Certidão de Remessa da Intimação para o Portal Eletrônico",
+         "Data" : "04/10/2018"
+      },
+      {
+         "Data" : "04/10/2018",
+         "Descrição" : "Nesta data, preparei os autos com vista a(o) Procurador(a) do Estado de Mato Grosso do Sul, atuante neste cartório, para ciência e/ou manifestação.",
+         "Título" : "Expedição de Termo"
+      },
+      {
+         "Data" : "04/10/2018",
+         "Descrição" : "",
+         "Título" : "Autos entregues em carga ao Procurador do Estado"
+      },
+      {
+         "Data" : "04/10/2018",
+         "Descrição" : "Especifiquem as partes, no prazo de 05 (cinco) dias, se há interesse em produção de provas, indicando-as e requerendo-as expressamente, a fim de se verificar a pertinência e a necessidade delas. O silêncio importará no julgamento antecipado do pedido.",
+         "Título" : "Emissão da Relação"
+      },
+      {
+         "Data" : "25/09/2018",
+         "Descrição" : "",
+         "Título" : "Recebidos os Autos do Juiz de Direito"
+      },
+      {
+         "Descrição" : "Vistos. Especifiquem as partes, no prazo de 05 (cinco) dias, se há interesse em produção de provas, indicando-as e requerendo-as expressamente, a fim de se verificar a pertinência e a necessidade delas. O silêncio importará no julgamento antecipado do pedido. I-se. C-se.",
+         "Data" : "25/09/2018",
+         "Título" : "Proferido despacho de mero expediente"
+      },
+      {
+         "Título" : "Em Cartório-p/ Escrivão/Diretor preparar Conclusão",
+         "Data" : "24/09/2018",
+         "Descrição" : ""
+      },
+      {
+         "Descrição" : "Nº Protocolo: WCGR.18.08373775-5 Tipo da Petição: Manifestação do Autor Data: 20/09/2018 14:24",
+         "Data" : "20/09/2018",
+         "Título" : "Juntada de Petição Intermediária Realizada"
+      },
+      {
+         "Descrição" : "Relação :0241/2018 Data da Publicação: 30/08/2018 Número do Diário: 4100",
+         "Data" : "29/08/2018",
+         "Título" : "Publicado ato publicado em data da publicação."
+      },
+      {
+         "Descrição" : "Relação: 0241/2018 Teor do ato: Intimação da parte autora para, querendo, impugnar a contestação no prazo de 15 (quinze) dias. Advogados(s): Ana Silvia Pessoa Salgado de Moura (OAB 7317/MS), Adriana Catelan Skowronski (OAB 10227/MS)",
+         "Data" : "29/08/2018",
+         "Título" : "Relação encaminhada ao D.J."
+      },
+      {
+         "Descrição" : "Intimação da parte autora para, querendo, impugnar a contestação no prazo de 15 (quinze) dias.",
+         "Data" : "28/08/2018",
+         "Título" : "Emissão da Relação"
+      },
+      {
+         "Título" : "Recebidos os Autos da Procuradoria do Estado",
+         "Descrição" : "",
+         "Data" : "28/08/2018"
+      },
+      {
+         "Título" : "Juntada de Petição Intermediária Realizada",
+         "Descrição" : "Nº Protocolo: WCGR.18.01063520-0 Tipo da Petição: Contestação Data: 28/08/2018 10:26",
+         "Data" : "28/08/2018"
+      },
+      {
+         "Data" : "14/08/2018",
+         "Descrição" : "Relação :0221/2018 Data da Publicação: 15/08/2018 Número do Diário: 4089",
+         "Título" : "Publicado ato publicado em data da publicação."
+      },
+      {
+         "Descrição" : "Relação: 0221/2018 Teor do ato: Ante o exposto, defiro o pedido de reconsideração de f. 228, tornando sem efeito a decisão de f.225/227. Defiro à autora os benefícios da Gratuidade da Justiça, eis que satisfeitos os requisitos do art. 98 do CPC. Anote-se e observe-se. Deixo de designar audiência de conciliação, nos termos do artigo 334, § 4º, inciso II, do CPC. Cite-se o réu. O prazo para o oferecimento de contestação, de trinta dias, terá como termo inicial a data da juntada do aviso de recebimento, com fulcro no artigo 231, I, do CPC. Advogados(s): Ana Silvia Pessoa Salgado de Moura (OAB 7317/MS), Adriana Catelan Skowronski (OAB 10227/MS)",
+         "Data" : "14/08/2018",
+         "Título" : "Relação encaminhada ao D.J."
+      },
+      {
+         "Título" : "Certidão Cartorária",
+         "Data" : "13/08/2018",
+         "Descrição" : "Certidão de Remessa da Intimação para o Portal Eletrônico"
+      },
+      {
+         "Título" : "Expedição de Carta de Citação",
+         "Data" : "13/08/2018",
+         "Descrição" : "PJMS - CGJ - Carta de Citação - Fazenda Pública - Integração PGE (CPC 2015)"
+      },
+      {
+         "Descrição" : "Em 13/08/2018, procedo à citação do(a) Ilustre Procurador(a) do Estado, referente aos autos acima mencionados.",
+         "Data" : "13/08/2018",
+         "Título" : "Expedição de Termo"
+      },
+      {
+         "Título" : "Autos entregues em carga ao Procurador do Estado",
+         "Descrição" : "",
+         "Data" : "13/08/2018"
+      },
+      {
+         "Data" : "13/08/2018",
+         "Descrição" : "Ante o exposto, defiro o pedido de reconsideração de f. 228, tornando sem efeito a decisão de f.225/227. Defiro à autora os benefícios da Gratuidade da Justiça, eis que satisfeitos os requisitos do art. 98 do CPC. Anote-se e observe-se. Deixo de designar audiência de conciliação, nos termos do artigo 334, § 4º, inciso II, do CPC. Cite-se o réu. O prazo para o oferecimento de contestação, de trinta dias, terá como termo inicial a data da juntada do aviso de recebimento, com fulcro no artigo 231, I, do CPC.",
+         "Título" : "Emissão da Relação"
+      },
+      {
+         "Título" : "Recebidos os Autos do Juiz de Direito",
+         "Data" : "13/08/2018",
+         "Descrição" : ""
+      },
+      {
+         "Descrição" : "Ante o exposto, defiro o pedido de reconsideração de f. 228, tornando sem efeito a decisão de f.225/227. Defiro à autora os benefícios da Gratuidade da Justiça, eis que satisfeitos os requisitos do art. 98 do CPC. Anote-se e observe-se. Deixo de designar audiência de conciliação, nos termos do artigo 334, § 4º, inciso II, do CPC. Cite-se o réu. O prazo para o oferecimento de contestação, de trinta dias, terá como termo inicial a data da juntada do aviso de recebimento, com fulcro no artigo 231, I, do CPC. I-se. C-se.",
+         "Data" : "13/08/2018",
+         "Título" : "Recebida petição inicial"
+      },
+      {
+         "Data" : "01/08/2018",
+         "Descrição" : "Nº Protocolo: WCGR.18.08286647-0 Tipo da Petição: Manifestação do Autor Data: 01/08/2018 09:55",
+         "Título" : "Juntada de Petição Intermediária Realizada"
+      },
+      {
+         "Título" : "Publicado ato publicado em data da publicação.",
+         "Descrição" : "Relação :0209/2018 Data da Publicação: 01/08/2018 Número do Diário: 4079",
+         "Data" : "31/07/2018"
+      },
+      {
+         "Título" : "Conclusos para Despacho",
+         "Data" : "31/07/2018",
+         "Descrição" : ""
+      },
+      {
+         "Título" : "Juntada de Emenda à Inicial",
+         "Descrição" : "Nº Protocolo: WCGR.18.08285914-8 Tipo da Petição: Emenda à inicial - Faz. Pública Data: 31/07/2018 16:45",
+         "Data" : "31/07/2018"
+      },
+      {
+         "Descrição" : "Relação: 0209/2018 Teor do ato: Ante todo o exposto, declino competência para o Juizado Especial da Fazenda Pública de Campo Grande. Advogados(s): Ana Silvia Pessoa Salgado de Moura (OAB 7317/MS), Adriana Catelan Skowronski (OAB 10227/MS)",
+         "Data" : "31/07/2018",
+         "Título" : "Relação encaminhada ao D.J."
+      },
+      {
+         "Título" : "Emissão da Relação",
+         "Descrição" : "Ante todo o exposto, declino competência para o Juizado Especial da Fazenda Pública de Campo Grande.",
+         "Data" : "30/07/2018"
+      },
+      {
+         "Data" : "30/07/2018",
+         "Descrição" : "",
+         "Título" : "Recebidos os Autos do Juiz de Direito"
+      },
+      {
+         "Descrição" : "Ante todo o exposto, declino competência para o Juizado Especial da Fazenda Pública de Campo Grande. I-se. C-se.",
+         "Data" : "30/07/2018",
+         "Título" : "Declarada incompetência"
+      },
+      {
+         "Título" : "Conclusos para Decisão",
+         "Descrição" : "",
+         "Data" : "30/07/2018"
+      },
+      {
+         "Descrição" : "",
+         "Data" : "30/07/2018",
+         "Título" : "Remetidos os Autos da Distribuição para o Cartório"
+      },
+      {
+         "Data" : "30/07/2018",
+         "Descrição" : "PJMS - DIST - Certidão documentos faltantes",
+         "Título" : "Certidão Cartorária"
+      },
+      {
+         "Título" : "Processo Distribuído por Sorteio",
+         "Descrição" : "",
+         "Data" : "30/07/2018"
+      }
+   ]
+}

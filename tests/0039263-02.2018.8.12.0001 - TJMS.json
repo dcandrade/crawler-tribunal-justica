@@ -1,0 +1,157 @@
+{
+   "Exectdo:" : [
+      {
+         "Nome" : "Estado de Mato Grosso do Sul",
+         "Representantes" : []
+      }
+   ],
+   "Área" : "Cível",
+   "Valor da ação" : "R$ 14.384,84",
+   "Processo" : "0039263-02.2018.8.12.0001",
+   "Assunto" : "Causas Supervenientes à Sentença",
+   "Classe" : "Cumprimento de Sentença contra a Fazenda Pública",
+   "Exeqte:" : [
+      {
+         "Nome" : "GRIMAR MARTINS ROMERO",
+         "Representantes" : [
+            {
+               "Nome" : "Ana Silvia Pessoa Salgado de Moura",
+               "Atribuição" : "Advogada"
+            },
+            {
+               "Atribuição" : "Advogada",
+               "Nome" : "Adriana Catelan Skowronski"
+            }
+         ]
+      }
+   ],
+   "Movimentações" : [
+      {
+         "Título" : "Recebidos os Autos da Procuradoria do Estado",
+         "Data" : "28/11/2018",
+         "Descrição" : ""
+      },
+      {
+         "Descrição" : "Nº Protocolo: WCGR.18.01131184-0 Tipo da Petição: Manifestação do Procurador da Fazenda Pública Estadual Data: 28/11/2018 17:00",
+         "Data" : "28/11/2018",
+         "Título" : "Juntada de Petição Intermediária Realizada"
+      },
+      {
+         "Descrição" : "Certidão de Remessa da Intimação para o Portal Eletrônico",
+         "Título" : "Certidão Cartorária",
+         "Data" : "22/10/2018"
+      },
+      {
+         "Título" : "Expedição de Termo",
+         "Data" : "22/10/2018",
+         "Descrição" : "Nesta data, preparei os autos com vista a(o) Procurador(a) do Estado de Mato Grosso do Sul, atuante neste cartório, para ciência e/ou manifestação."
+      },
+      {
+         "Título" : "Autos entregues em carga ao Procurador do Estado",
+         "Data" : "22/10/2018",
+         "Descrição" : ""
+      },
+      {
+         "Descrição" : "",
+         "Título" : "Recebidos os Autos do Juiz de Direito",
+         "Data" : "17/10/2018"
+      },
+      {
+         "Título" : "Despacho de recebimento da inicial",
+         "Data" : "17/10/2018",
+         "Descrição" : "Vistos. Reposicione-se para o início deste processo digital as peças de fls. 71/73, eis que se referem à inicial de requerimento de cumprimento de sentença. Após, intime-se o executado, na forma do art. 535 do CPC para, querendo, impugnar a execução, no prazo de 30 dias. Cumpra-se."
+      },
+      {
+         "Título" : "Conclusos para Despacho",
+         "Data" : "16/10/2018",
+         "Descrição" : ""
+      },
+      {
+         "Data" : "16/10/2018",
+         "Título" : "Certidão Cartorária",
+         "Descrição" : "Certifico que, em cumprimento à fl. 2612 dos autos n.º 0062360-46.2009.8.12.0001, procedi à evolução de Classe do processo bem como a digitalização das peças processuais pertinentes, conforme orientação da Corregedoria Geral de Justiça, o qual foi distribuído por dependência, tornando-se Exequente Grimar Martins Romero e Executado o Estado de Mato Grosso do Sul, gerando os autos n.º 0039263-02.2018.8.12.0001. Certifico ainda que não há custas a serem recolhidas devido a isenção legal (ver fls. 197 dos autos n.º 0062360-46.2009.8.12.0001)."
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado"
+      },
+      {
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado",
+         "Descrição" : ""
+      },
+      {
+         "Descrição" : "",
+         "Título" : "Juntada de Outros Documentos",
+         "Data" : "16/10/2018"
+      },
+      {
+         "Data" : "16/10/2018",
+         "Título" : "Juntada de Outros Documentos",
+         "Descrição" : ""
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado"
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado"
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado"
+      },
+      {
+         "Título" : "Juntada de Execução/Cumprimento de Sentença",
+         "Data" : "16/10/2018",
+         "Descrição" : ""
+      },
+      {
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado",
+         "Descrição" : ""
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado"
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Certidão do Oficial de Justiça"
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Juntada de Mandado"
+      },
+      {
+         "Descrição" : "",
+         "Data" : "16/10/2018",
+         "Título" : "Documento Digitalizado"
+      },
+      {
+         "Descrição" : "",
+         "Título" : "Documento Digitalizado",
+         "Data" : "16/10/2018"
+      },
+      {
+         "Título" : "Remetidos os Autos da Distribuição para o Cartório",
+         "Data" : "16/10/2018",
+         "Descrição" : ""
+      },
+      {
+         "Título" : "Processo Distribuído por Dependência",
+         "Data" : "16/10/2018",
+         "Descrição" : "Determinação fls. 2612"
+      }
+   ],
+   "Juiz" : "Marcelo Andrade Campos Silva",
+   "Controle" : "2018/001094"
+}

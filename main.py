@@ -1,19 +1,26 @@
+import selenium
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
 from utils import clear_strings
-from data_elements import PROCESS_DATA_XPATHS
+from utils import clear_string
 
 
 
 class Crawler:
-    DELIMITER = "8.26"
-    URL = "https://esaj.tjsp.jus.br/cpopg/open.do"
+    DELIMITER = {
+        'TJSP' : '8.26',
+        'TJMS' : '8.12'
+    }
 
-    def __init__(self, silent=True):
+    URL = {
+        'TJSP' : 'https://esaj.tjsp.jus.br/cpopg/open.do',
+        'TJMS' : 'https://esaj.tjms.jus.br/cpopg5/open.do',
+    }
+
+    #TODO: check for wrong process number
+
+    def __init__(self, court, silent=True):
 
         if silent:
             chromeOptions = webdriver.ChromeOptions()
@@ -24,13 +31,15 @@ class Crawler:
         else:
             self.driver = webdriver.Chrome()
 
-        self.driver.get(Crawler.URL)
-    
-    # TODO: melhorar nome
+        self.court = court
+        self.url = Crawler.URL[court] #TODO: necessário armazenar?
+        self.delimiter = Crawler.DELIMITER[court]
+        self.driver.get(self.url)
+        
     def get_descriptors(self, process_number):
-        delimiter_index = process_number.find(Crawler.DELIMITER)
+        delimiter_index = process_number.find(self.delimiter)
         numero_digito_unificado = process_number[:delimiter_index-1]
-        foro_numero_unificado = process_number[delimiter_index+1 + len(Crawler.DELIMITER):]
+        foro_numero_unificado = process_number[delimiter_index+1 + len(self.delimiter):]
 
         return numero_digito_unificado, foro_numero_unificado
 
@@ -45,79 +54,70 @@ class Crawler:
 
         #TODO: verificar processos que precisam de senha
 
-        try:
-            element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.ID, "linkmovimentacoes"))
-            )
-        except:
-            raise EnvironmentError("Couldn't get process page")
-
         errors = self.driver.find_elements_by_class_name("tituloMensagem")
 
         return errors
 
-    def expand_page(self):
-        expandable_items_ids = [
-            'linkmovimentacoes',
-            'linkpartes'
-        ]
+    def extract_process_data(self):      
+        data_table = self.driver.find_element_by_xpath("/html/body/div/table[4]/tbody/tr/td/div[1]/table[2]/tbody")
 
-        for item_id in expandable_items_ids:
-            self.driver.find_element_by_id(item_id).click()
+        entries = data_table.find_elements_by_tag_name("tr")
+        tuples = map(lambda x: x.text.split(":"), set(entries)) # Split to format [key, value]
+        tuples = [clear_strings(t) for t in tuples if len(t) == 2] # Filter out single elements and clear
 
-    def extract_process_data(self):
-        process_data = {}
-        for item_name, item_xpath in PROCESS_DATA_XPATHS.items():
-            data_element = self.driver.find_element_by_xpath(item_xpath)
-            process_data[item_name] = data_element.text
+        process_data = {t[0]: ' '.join(t[1:]) for t in tuples}
 
         return process_data
 
-    def extract_party(self, data_table):
-        from utils import clear_string
-        
-        soup = BeautifulSoup(data_table.get_attribute("innerHTML"), "html.parser")
-        party_name = clear_string(soup.find(string=True))
+    def extract_party(self, party_str):
+        party_name, *raw_representants = party_str.split("\n")
 
-        data = soup.find("span").find_all_next(string=True)
-        data = map(clear_string, data)
-        clean_data = [item for item in data if len(item) > 0]
+        representants = []
+        for rep in raw_representants:
+            role, name = rep.split(":")
 
-        lawyers = []
-        for i in range(1, len(clean_data), 2):
-            #role = clean_data[i]
-            name = clean_data[i]
-            lawyers.append(name)
+            representants.append({
+                "Nome": clear_string(name),
+                "Atribuição" : clear_string(role)
+            })
 
         return {
             "Nome" : party_name,
-            "Advogados": lawyers
+            "Representantes": representants
         }
 
     def extract_parties(self):
-        parties = {}
-        parties_data_table = self.driver.find_element_by_xpath("//*[@id=\"tableTodasPartes\"]/tbody")
-        element_source = parties_data_table.get_attribute("innerHTML")
-        num_victims = element_source.count("Reqte")
-        num_defendants = element_source.count("Reqdo")
+        all_parties = {}
+        data_table = None
+        try:
+            self.driver.find_element_by_id("linkpartes").click()
+            data_table = self.driver.find_element_by_xpath("//*[@id=\"tableTodasPartes\"]")
+        except selenium.common.exceptions.NoSuchElementException:
+            data_table = self.driver.find_element_by_xpath("//*[@id=\"tablePartesPrincipais\"]")
 
-        base_party_xpath = "tr[{}]/td[2]"
+        raw_entries = data_table.find_elements_by_tag_name("td")
 
-        parties["Requerentes"] = []
-        for i in range(num_victims):
-            party_data_table = parties_data_table.find_element_by_xpath(base_party_xpath.format(i+1))
-            parties["Requerentes"].append(self.extract_party(party_data_table))
+        for i in range(0, len(raw_entries), 2):
+            role = clear_string(raw_entries[i].text)
+            party_str = raw_entries[i+1].text
+            party = self.extract_party(party_str)  
 
-        parties["Requeridos"] = []
-        for i in range(num_defendants):
-            index = num_victims + i + 1
-            party_data_table = parties_data_table.find_element_by_xpath(base_party_xpath.format(index))
-            parties["Requeridos"].append(self.extract_party(party_data_table))
+            role_representants = all_parties.get(role, [])
+            role_representants.append(party)
+            all_parties[role] = role_representants
 
-        return parties
+        return all_parties
         
+    # TODO: adicionar documentos
     def extract_transactions(self):
-        transactions_table = self.driver.find_element_by_xpath("//*[@id=\"tabelaUltimasMovimentacoes\"]")
+        transactions_table = None
+
+        try:
+            self.driver.find_element_by_id('linkmovimentacoes').click()
+            transactions_table = self.driver.find_element_by_xpath("//*[@id=\"tabelaTodasMovimentacoes\"]")
+        except:
+            transactions_table = self.driver.find_element_by_xpath("//*[@id=\"tabelaUltimasMovimentacoes\"]")
+
         soup = BeautifulSoup(transactions_table.get_attribute("innerHTML"), "html.parser")
 
         raw_transactions = soup.find_all("tr")
@@ -125,26 +125,34 @@ class Crawler:
         transactions = []
         for raw_transaction in raw_transactions:
             elements = raw_transaction.find_all(string=True)
-            date, title, description = clear_strings(elements)
+            date, title, *description = clear_strings(elements)
+
             transaction = {
                 "Data": date,
                 "Título" : title,
-                "Descrição" : description
+                "Descrição" : " ".join(description).strip()
             }
+
             transactions.append(transaction)
         
         return transactions
 
+    def run(self, process_number):
+        n, f = self.get_descriptors(process_number)
+        self.enter_process_page(n, f)
+        data = self.extract_process_data()
+        transactions = {"Movimentações" : self.extract_transactions()}
+        parties = self.extract_parties()
+
+        import json
+        all_data = {**data, **parties, **transactions}
+        #print(json.dumps(all_data))
+        return all_data
+        self.quit()
+
     def quit(self):
         self.driver.quit()
 
-c = Crawler()
-
-n, f = c.get_descriptors("1002298-86.2015.8.26.0271")
-c.enter_process_page(n, f)
-c.expand_page()
-data = c.extract_process_data()
-#print(data)
-print(c.extract_parties())
-#print("-----")
-#print(c.extract_transactions())
+process_number = "1002298-86.2015.8.26.0271"
+c = Crawler("TJSP", silent=True)
+c.run(process_number)
