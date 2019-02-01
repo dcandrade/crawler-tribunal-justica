@@ -2,23 +2,13 @@ import selenium
 from selenium import webdriver
 from utils import clear_strings
 from utils import clear_string
-
+from config import BASE_URLS, DELIMITERS
 
 
 class Crawler:
 
-    DELIMITERS = {
-        'TJSP' : '8.26',
-        'TJMS' : '8.12'
-    }
-
-    BASE_URLS = {
-        'TJSP' : 'https://esaj.tjsp.jus.br/cpopg/open.do',
-        'TJMS' : 'https://esaj.tjms.jus.br/cpopg5/open.do',
-    }
-
     #TODO: check for wrong process number
-    def __init__(self, court = None, silent=True):
+    def __init__(self, court, silent=True):
         self.court = court
         if silent:
             chromeOptions = webdriver.ChromeOptions()
@@ -30,8 +20,8 @@ class Crawler:
             self.driver = webdriver.Chrome()
         
         if court is not None:
-            self.delimiter = Crawler.DELIMITERS[court]
-            self.driver.get(Crawler.BASE_URLS[court])
+            self.delimiter = DELIMITERS[court]
+            self.driver.get(BASE_URLS[court])
 
         
     def get_descriptors(self, process_number):
@@ -50,7 +40,6 @@ class Crawler:
 
         self.driver.find_element_by_name("pbEnviar").click()
 
-        #TODO: verificar processos que precisam de senha
         # throw exep if process number isnt valid
 
         errors = self.driver.find_elements_by_class_name("tituloMensagem")
@@ -134,16 +123,21 @@ class Crawler:
         
         return {"Movimentações" : transactions}
 
-    def run_court(self, process_number, court):
-        self.court = court
-        self.delimiter = Crawler.DELIMITERS[court]
-        self.driver.get(Crawler.BASE_URLS[court])
+    # def run_court(self, process_number, court, callback = None):
+    #     self.court = court
+    #     self.delimiter = Crawler.DELIMITERS[court]
+    #     self.driver.get(Crawler.BASE_URLS[court])
+    #     print("configured")
+    #     all_data = self.run(process_number)
+    #     print("got data")
+    #     if callback is not None:
+    #         callback(all_data)
 
-        self.run(process_number)
-
-    def run(self, process_number):
+    def run(self, process_number, callback = None):
         if self.court is None:
+            print("missing court")
             raise Exception("Court missing")
+        print("getting descrs")
         n, f = self.get_descriptors(process_number)
         self.enter_process_page(n, f)
         
@@ -154,7 +148,17 @@ class Crawler:
         all_data = {**data, **parties, **transactions}
         #import json
         #print(json.dumps(all_data))
+
+        if callback is not None:
+            callback(all_data)
+
         return all_data
+    
+    def run_queue(self, task_queue):
+        while True:
+            process_number, callback = task_queue.get()
+            self.run(process_number, callback)
+            self.driver.get(BASE_URLS[self.court])
 
     def quit(self):
         self.driver.quit()
