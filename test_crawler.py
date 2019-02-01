@@ -1,5 +1,5 @@
 import unittest
-from main import Crawler
+from crawler import Crawler
 from parameterized import parameterized
 
 
@@ -52,6 +52,7 @@ class TestPageLoad(unittest.TestCase):
         ["tests/0821901-51.2018.8.12.0001 - TJMS.json"],
         ["tests/0946027-47.1999.8.26.0100 - TJSP.json"],
         ["tests/1002298-86.2015.8.26.0271 - TJSP.json"],
+        ["tests/0831704-34.2013.8.12.0001 - TJMS.json"],
     ])
     def test_get_data(self, data_file):
         process_number, court = data_file.strip('.json').split(" - ")

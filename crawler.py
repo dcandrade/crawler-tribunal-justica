@@ -1,27 +1,25 @@
 import selenium
 from selenium import webdriver
-from bs4 import BeautifulSoup
-
 from utils import clear_strings
 from utils import clear_string
 
 
 
 class Crawler:
-    DELIMITER = {
+
+    DELIMITERS = {
         'TJSP' : '8.26',
         'TJMS' : '8.12'
     }
 
-    URL = {
+    BASE_URLS = {
         'TJSP' : 'https://esaj.tjsp.jus.br/cpopg/open.do',
         'TJMS' : 'https://esaj.tjms.jus.br/cpopg5/open.do',
     }
 
     #TODO: check for wrong process number
-
-    def __init__(self, court, silent=True):
-
+    def __init__(self, court = None, silent=True):
+        self.court = court
         if silent:
             chromeOptions = webdriver.ChromeOptions()
             prefs = {'profile.managed_default_content_settings.images':2} # no imgs
@@ -30,11 +28,11 @@ class Crawler:
             self.driver = webdriver.Chrome(options=chromeOptions)
         else:
             self.driver = webdriver.Chrome()
+        
+        if court is not None:
+            self.delimiter = Crawler.DELIMITERS[court]
+            self.driver.get(Crawler.BASE_URLS[court])
 
-        self.court = court
-        self.url = Crawler.URL[court] #TODO: necessário armazenar?
-        self.delimiter = Crawler.DELIMITER[court]
-        self.driver.get(self.url)
         
     def get_descriptors(self, process_number):
         delimiter_index = process_number.find(self.delimiter)
@@ -53,6 +51,7 @@ class Crawler:
         self.driver.find_element_by_name("pbEnviar").click()
 
         #TODO: verificar processos que precisam de senha
+        # throw exep if process number isnt valid
 
         errors = self.driver.find_elements_by_class_name("tituloMensagem")
 
@@ -65,7 +64,7 @@ class Crawler:
         tuples = map(lambda x: x.text.split(":"), set(entries)) # Split to format [key, value]
         tuples = [clear_strings(t) for t in tuples if len(t) == 2] # Filter out single elements and clear
 
-        process_data = {t[0]: ' '.join(t[1:]) for t in tuples}
+        process_data = {t[0]: ' '.join(t[1:]) for t in tuples} # t[0] is the title, t[1:] is the data
 
         return process_data
 
@@ -91,9 +90,9 @@ class Crawler:
         data_table = None
         try:
             self.driver.find_element_by_id("linkpartes").click()
-            data_table = self.driver.find_element_by_xpath("//*[@id=\"tableTodasPartes\"]")
+            data_table = self.driver.find_element_by_id("tableTodasPartes")
         except selenium.common.exceptions.NoSuchElementException:
-            data_table = self.driver.find_element_by_xpath("//*[@id=\"tablePartesPrincipais\"]")
+            data_table = self.driver.find_element_by_id("tablePartesPrincipais")
 
         raw_entries = data_table.find_elements_by_tag_name("td")
 
@@ -108,51 +107,59 @@ class Crawler:
 
         return all_parties
         
-    # TODO: adicionar documentos
     def extract_transactions(self):
         transactions_table = None
 
         try:
             self.driver.find_element_by_id('linkmovimentacoes').click()
-            transactions_table = self.driver.find_element_by_xpath("//*[@id=\"tabelaTodasMovimentacoes\"]")
+            transactions_table = self.driver.find_element_by_id("tabelaTodasMovimentacoes")
         except:
-            transactions_table = self.driver.find_element_by_xpath("//*[@id=\"tabelaUltimasMovimentacoes\"]")
-
-        soup = BeautifulSoup(transactions_table.get_attribute("innerHTML"), "html.parser")
-
-        raw_transactions = soup.find_all("tr")
+            transactions_table = self.driver.find_element_by_id("tabelaUltimasMovimentacoes")
+        
+        raw_transactions = transactions_table.find_elements_by_tag_name("td")
 
         transactions = []
-        for raw_transaction in raw_transactions:
-            elements = raw_transaction.find_all(string=True)
-            date, title, *description = clear_strings(elements)
+        for i in range(0, len(raw_transactions), 3):
+            date, _, full_description = raw_transactions[i: i+3] #date, empty space, desc. w/ title
+            title, *description = full_description.text.split("\n")
+            description = " ".join(description).strip()
 
             transaction = {
-                "Data": date,
-                "Título" : title,
-                "Descrição" : " ".join(description).strip()
+                "Data": clear_string(date.text),
+                "Título" : clear_string(title),
+                "Descrição" : clear_string(description)
             }
 
             transactions.append(transaction)
         
-        return transactions
+        return {"Movimentações" : transactions}
+
+    def run_court(self, process_number, court):
+        self.court = court
+        self.delimiter = Crawler.DELIMITERS[court]
+        self.driver.get(Crawler.BASE_URLS[court])
+
+        self.run(process_number)
 
     def run(self, process_number):
+        if self.court is None:
+            raise Exception("Court missing")
         n, f = self.get_descriptors(process_number)
         self.enter_process_page(n, f)
+        
         data = self.extract_process_data()
-        transactions = {"Movimentações" : self.extract_transactions()}
+        transactions = self.extract_transactions()
         parties = self.extract_parties()
 
-        import json
         all_data = {**data, **parties, **transactions}
+        #import json
         #print(json.dumps(all_data))
         return all_data
-        self.quit()
 
     def quit(self):
         self.driver.quit()
 
-process_number = "1002298-86.2015.8.26.0271"
-c = Crawler("TJSP", silent=True)
-c.run(process_number)
+#process_number = "0633677-76.1994.8.26.0100"
+#court = "TJSP"
+#c = Crawler(silent=True)
+#c.run(court, process_number)
