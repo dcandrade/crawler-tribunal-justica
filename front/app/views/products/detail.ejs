@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    </head>
+    <body>
+        <form action="/products/detail" method="POST">
+            <div>
+                <label class="form-check-label" for="id">#</label>
+                <input class="form-control" type="text" name="id" value="<%= product.id %>" readonly>
+            </div>
+            <div>
+                <label class="form-check-label" for="title">Title</label>
+                <input class="form-control" type="text" name="title" value="<%= product.title %>" placeholder="Book title">
+            </div>
+            <div>
+                <label class="form-check-label" for="price">Price</label>
+                <input class="form-control" type="text" name="price" value="<%= product.price %>" placeholder="Book value">
+            </div>
+            <div>
+                <label class="form-check-label" for="description">Description</label>
+                <textarea class="form-control" name="description" placeholder="Describe the book content"><%= product.description %></textarea>
+            </div>
+            
+            <input class="form-control btn btn-primary" type="submit" value="Save">
+        </form>
+        <form action="/products/delete" method="POST">
+              <div hidden>
+                <label class="form-check-label" for="id">#</label>
+                <input class="form-control" type="text" name="id" value="<%= product.id %>" readonly>
+            </div>
+            <input class="form-control btn btn-danger" type="submit" value="Delete">
+        </form>
+
+    </body>
+</html>

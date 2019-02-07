@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>New Flash Sale</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    </head>
+    <body>
+    <h2>Create new flash sale</h2>
+        <form action="/flash-sales" method="POST">
+            <div>
+                <label class="form-check-label" for="description">Sale description</label>
+                <input class="form-control" type="text" name="description">
+            </div>
+            <div>
+                <label class="form-check-label" for="book[id]">Book on sale</label>
+                <select class="form-control" name="book[id]">
+                    <%for(var i=0; i<books.length; i++){%>
+                        <option value="<%= books[i].id %>"> <%= books[i].title %> </option>
+                    <%}%>
+                </select>
+            </div>
+            <input class="form-control btn btn-primary" type="submit" value="Create flash sale">
+        </form>
+    </body>
+</html>

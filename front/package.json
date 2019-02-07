@@ -1,0 +1,31 @@
+{
+  "name": "loja-livros",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "circular-json": "^0.5.9",
+    "ejs": "^2.5.7",
+    "express": "^4.16.4",
+    "express-load": "^1.1.16",
+    "express-validator": "^4.1.1",
+    "mysql": "^2.14.1",
+    "nested-json-to-table": "0.0.8",
+    "request": "^2.81.0",
+    "requests": "^0.2.2",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "database-cleaner": "^1.2.0",
+    "mocha": "^3.5.0",
+    "supertest": "^3.0.0"
+  }
+}

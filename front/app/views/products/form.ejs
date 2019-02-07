@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Insert New Book</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    </head>
+    <body>
+    <h2>Insert New Book</h2>
+        <div class="errors">
+            <%if(validationErrors) {%>
+                <ul>
+                    <%for(var i=0; i<validationErrors.length; i++){%>
+                        <li><%= validationErrors[i].msg %></li>
+                    <%}%>
+                </ul>
+            <%}%>
+        </div>
+        <form action="/products" method="POST">
+            <div>
+                <label class="form-check-label" for="title">Title</label>
+                <input class="form-control" type="text" name="title" value="<%= product.title %>" placeholder="Book title">
+            </div>
+            <div>
+                <label class="form-check-label" for="price">Price</label>
+                <input class="form-control" type="text" name="price" value="<%= product.price %>" placeholder="Book value">
+            </div>
+            <div>
+                <label class="form-check-label" for="description">Description</label>
+                <textarea class="form-control" name="description" placeholder="Describe the book content"><%= product.description %></textarea>
+            </div>
+            
+            <input class="form-control btn btn-primary" type="submit" value="Save">
+        </form>
+    </body>
+</html>
