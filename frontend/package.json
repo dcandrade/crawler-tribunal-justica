@@ -1,0 +1,22 @@
+{
+  "name": "process-crawler-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "author": "Daniel Coelho de Andrade",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "circular-json": "^0.5.9",
+    "ejs": "^2.5.7",
+    "express": "^4.16.4",
+    "express-load": "^1.1.16",
+    "express-validator": "^4.1.1",
+    "nested-json-to-table": "0.0.8"
+  }
+}
