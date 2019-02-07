@@ -1,4 +1,6 @@
 front/node_modules
-ipynb_checkpoints
-vscode
-idea
+.ipynb_checkpoints
+.vscode
+.idea
+**/__pycache__
+**/*.ipynb
