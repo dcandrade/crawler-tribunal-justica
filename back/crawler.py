@@ -41,16 +41,20 @@ class Crawler:
 
         self.driver.find_element_by_name("pbEnviar").click()
 
-        errors = self.driver.find_elements_by_class_name("tituloMensagem")
+        errors = self.driver.find_elements_by_id("mensagemRetorno")
+        errors = [error.text for error in errors]
 
         if len(errors) > 0:
             raise InvalidProcessNumberException(self.process_number, errors)
-        
+        print(errors)
         # TODO: refactor
         try:
             self.driver.find_element_by_id("popupModalDiv")
+
             raise PasswordProtectedProcess(self.process_number)
         except selenium.common.exceptions.NoSuchElementException:
+            print("not raised")
+
             pass
 
         return True
@@ -142,7 +146,9 @@ class Crawler:
         print("Getting ", process_number)
 
         n, f = self.get_descriptors(process_number)
+
         self.enter_process_page(n, f)
+
         data = self.extract_process_data()
         transactions = self.extract_transactions()
         parties = self.extract_parties()
@@ -169,8 +175,11 @@ class CrawlerWorker():
         process = self.dao.fetch_process(self.crawler.get_court(), process_number)
 
         if process is None:
-            process = self.crawler.run(process_number)
-            print(process)
+            try:
+                process = self.crawler.run(process_number)
+            except(InvalidProcessNumberException, PasswordProtectedProcess) as err:
+                return err.get_errors()
+
             process["_id"] = process_number
             self.dao.insert_process(self.crawler.get_court(), process)
 
@@ -184,7 +193,7 @@ class CrawlerWorker():
 
 if __name__ == "__main__":
     c = CrawlerWorker("TJSP")
-    d = c.run("0946027-47.1999.8.26.0100")
+    d = c.run("aaa")
     c.quit()
     
     from pprint import pprint

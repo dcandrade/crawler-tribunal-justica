@@ -971,6 +971,11 @@ legend {
   width: 74px;
 }
 
+.error-list{
+  color: red;
+  font-weight: bold;
+}
+
 .s003 form .inner-form .input-field.third-wrap .btn-search {
   height: 100%;
   width: 100%;

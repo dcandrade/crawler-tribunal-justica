@@ -1,14 +1,21 @@
+var http = require('http');
+
 module.exports = function(app){
-    var http = require('http');
     app.get('/', function(request, response){
-        var connection = app.infra.connectionFactory();
-        var productsDAL = new app.infra.ProductsDAO(connection);
+
         var options = {
             host: "localhost",
             port: 8888,
             path: '/courts',
             method: 'GET'
         };
+        
+        var errors = request.query['errors'];
+        var errrorList = [];
+
+        if(errors){
+            errorList = errors.split(',');
+        }
         
 
         http.request(options, function(res) {
@@ -17,7 +24,8 @@ module.exports = function(app){
             res.on('data', function (chunk) {
               result = JSON.parse(chunk);
               response.render('home/index',{
-                  courts: result.courts
+                  courts: result.courts,
+                  errors:errorList
               })
             });
             

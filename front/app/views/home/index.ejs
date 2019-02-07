@@ -12,12 +12,17 @@
   <body>
     <div class="s003">
       <img class="logo" src="images/logo.png" alt="Logo JusBrasil">
+        <ul class="error-list">
+          <%for (i in errors){%>
+            <li><%= errors[i] %> </li>
+          <%}%>
+      </ul>
       <form class="search-form" id="search-form" action="process/">
         <div class="inner-form">
           <div class="input-field first-wrap">
             <div class="input-select">
-              <select id="court-menu-info" data-trigger="" name="court">
-                <option placeholder="">Tribunal</option>
+              <select id="court-menu-info" data-trigger="" name="court" required>
+                <option value="">Selecione o Tribunal</option>
                 <%for(court in courts){%>
                         <option value="<%= court %>"> <%= courts[court].name %> </option>
                 <%}%>
@@ -25,7 +30,7 @@
             </div>
           </div>
           <div class="input-field second-wrap">
-            <input name="number" id="process-number-info" type="text" placeholder="Número do Processo" />
+            <input name="number" id="process-number-info" type="text" placeholder="Número do Processo" required/>
           </div>
           <div class="input-field third-wrap">
             <button type="submit" form="search-form" value="submit" class="btn-search" id="btn-search" type="button">

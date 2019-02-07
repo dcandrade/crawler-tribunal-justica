@@ -23,16 +23,26 @@ module.exports = function(app){
 
         axios.get(url).then(res => {
             data = res.data;
-            delete data["_id"];
-            var transactions = data["Movimentações"];
-            delete data["Movimentações"]
-            tabledData = jsonToHTML([data]);
-            tabledTransactions = jsonToHTML([transactions]);
+            
+            // Something bad happenned
+            if(data['errors']){
+                var errors = data['errors'];
+                var errorString = encodeURIComponent(errors);
 
-            response.render('processes/process',{
-                processData: tabledData,
-                transactions: tabledTransactions
-            })
+                response.redirect('/?errors=' + errorString);
+
+            } else{ // Request is OK
+                delete data["_id"];
+                var transactions = data["Movimentações"];
+                delete data["Movimentações"]
+                tabledData = jsonToHTML([data]);
+                tabledTransactions = jsonToHTML([transactions]);
+
+                response.render('processes/process',{
+                    processData: tabledData,
+                    transactions: tabledTransactions
+                })
+        }
         }).catch(error => {
             console.log(error);
           });

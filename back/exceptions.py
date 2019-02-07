@@ -4,7 +4,9 @@ class InvalidProcessNumberException(Exception):
         self.errors = errors
 
     def get_errors(self):
-        return self.errors
+        return {
+            'errors': self.errors
+        }
 
 class PasswordProtectedProcess(Exception):
     def __init__(self, process_number):
@@ -12,5 +14,5 @@ class PasswordProtectedProcess(Exception):
 
     def get_errors(self):
         return {
-            'Processo Inacessível' : 'Protegido por senha'
+            "errors" : ['Processo protegido por senha']
         }
