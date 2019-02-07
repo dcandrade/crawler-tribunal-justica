@@ -44,24 +44,24 @@
           tables[i].classList.add("table-sm");
         }
 
-        tables[1].classList.add("hide-table");
+        //tables[1].classList.add("hide-table");
         
       </script>
       <script>
         function showTransactions(){
             var data = document.getElementById("data-table");
             var transactions = document.getElementById("transactions-table");
-
-            transactions.classList.remove("hide-table");
+            
             data.classList.add("hide-table");
+            transactions.classList.remove("hide-table");
         }
 
         function hideTransactions(){
             var data = document.getElementById("data-table");
             var transactions = document.getElementById("transactions-table");
 
-            data.classList.remove("hide-table");
             transactions.classList.add("hide-table");
+            data.classList.remove("hide-table");
         }
 
         hideTransactions();

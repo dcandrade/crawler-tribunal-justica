@@ -20,7 +20,7 @@ module.exports = function(app){
         axios.get(url).then(res => {
             data = res.data;
             
-            // Something bad happenned
+            // Something wrong happenned
             if(data['errors']){
                 var errors = data['errors'];
                 var errorString = encodeURIComponent(errors);
@@ -34,10 +34,11 @@ module.exports = function(app){
 
                 var tabledData = null;
                 var tabledTransactions = null;
+
                 try {
                     tabledData = jsonToHTML([data]);
                      tabledTransactions = jsonToHTML([transactions]);
-                } catch (TypeError) {
+                } catch (TypeError) {// Could not convert o table, display JSON
                     tabledData = "<table>"+JSON.stringify(data)+"</table>";
                     tabledTransactions = "<table>"+JSON.stringify(transactions)+"</table>"  ;
                 }
