@@ -1,4 +1,4 @@
-POOL_SIZE = 5               # Size of the crawler pool for each court (See crawler.async_pool.CrawlerPool)
+POOL_SIZE = 1               # Size of the crawler pool for each court (See crawler.async_pool.CrawlerPool)
 USE_PROXY = False           # Use or not proxies to hide the origin of the requests
 TEST = False                # If running locally (not in Docker), set this to True
 DB_NAME = 'process-crawler' # DB name in Mongo

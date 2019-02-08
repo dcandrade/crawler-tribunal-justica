@@ -219,7 +219,7 @@ class CrawlerWorker:
         if process is None:
             try:
                 process = self.__crawler.run(process_number)
-            except(InvalidProcessNumberException, PasswordProtectedProcess) as err:
+            except(InvalidProcessNumberException, PasswordProtectedProcessException) as err:
                 return err.get_errors()
 
             process["_id"] = process_number

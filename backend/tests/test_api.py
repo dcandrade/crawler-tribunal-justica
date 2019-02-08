@@ -33,7 +33,7 @@ class TestGetProcess(testing.AsyncHTTPTestCase):
         return crawler
 
     def get_app(self):
-        return web.Application([('/get', MainHandler)])
+        return web.Application([('/get_process', MainHandler)])
 
     def get_new_ioloop(self):
         return tasyncio.AsyncIOMainLoop()
