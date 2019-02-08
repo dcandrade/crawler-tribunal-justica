@@ -5,11 +5,11 @@ import os
 import sys
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
-
-from crawler.workers import _Crawler, CrawlerWorker
-from utils.exceptions import InvalidProcessNumberException, PasswordProtectedProcess
-from db.process_dao import ProcessDAO
 import config
+config.TEST = True
+from crawler.workers import _Crawler, CrawlerWorker
+from utils.exceptions import InvalidProcessNumberException, PasswordProtectedProcessException
+from db.process_dao import ProcessDAO
 
 class TestCrawler(unittest.TestCase):
     def setUp(self):
@@ -43,7 +43,7 @@ class TestCrawler(unittest.TestCase):
         ["TJMS", "0000261-70.2010.8.12.0109", None],
         ["TJMS", "0039263-02.2018.8.12.0001", None],
         ["TJMS", "0831704-34.2013.8.12.0001", None],
-        ["TJSP", "0000000-00.0000.8.26.0000", PasswordProtectedProcess],
+        ["TJSP", "0000000-00.0000.8.26.0000", PasswordProtectedProcessException],
         ["TJMS", "1111111-11.1111.8.12.1111", InvalidProcessNumberException],
     ])
     def test_enter_process_page(self, court, process_number, exception=None):

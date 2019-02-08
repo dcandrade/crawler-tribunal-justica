@@ -39,7 +39,7 @@ class CourtHandler(tornado.web.RequestHandler):
 
 def make_app():
     return tornado.web.Application([
-        (r"/get", MainHandler),
+        (r"/get_process", MainHandler),
         (r"/stop", StopHandler),
         (r"/courts", CourtHandler)
     ], debug=False)
@@ -48,5 +48,5 @@ def make_app():
 if __name__ == "__main__":
     app = make_app()
     app.listen(8888)
-    tornado.ioloop.IOLoop.current().start()
     print("Backend server online")
+    tornado.ioloop.IOLoop.current().start()

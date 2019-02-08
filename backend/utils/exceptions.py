@@ -9,9 +9,9 @@ class InvalidProcessNumberException(Exception):
         }
 
 
-class PasswordProtectedProcess(Exception):
+class PasswordProtectedProcessException(Exception):
     def __init__(self, process_number):
-        super(PasswordProtectedProcess, self).__init__(
+        super(PasswordProtectedProcessException, self).__init__(
             "O número do processo {} é protegido por senha".format(process_number))
 
     def get_errors(self):

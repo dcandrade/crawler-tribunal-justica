@@ -3,33 +3,52 @@ from utils.webdriver_factory import get_webdriver
 import config
 
 from utils.string_clean import clear_strings, clear_string, process_key
-from utils.exceptions import InvalidProcessNumberException, PasswordProtectedProcess
+from utils.exceptions import InvalidProcessNumberException, PasswordProtectedProcessException
 from db.process_dao import ProcessDAO
 
 
 class _Crawler:
 
     def __init__(self, court, silent=True):
+        """
+        Extracts process data from a giver court
+        :param court: Court abbreviation (e.g. TJSP, TJMS)
+        :param silent: If True, selenium will run on headless mode
+        """
         self.__court = court
         self.__delimiter = config.COURTS[court]['delimiter']  # replace by static?
         self.__driver = get_webdriver(silent)
         self.__driver.get(config.COURTS[court]['url'])
 
     def get_descriptors(self, process_number):
+        """
+        Given a process_number, extracts the data needed to fill the court page form
+
+        :param process_number: The process number to be described
+        :return: The process digit number and process forum number
+        """
         self.process_number = process_number
 
         delimiter_index = process_number.find(self.__delimiter)
-        numero_digito_unificado = process_number[:delimiter_index - 1]
-        foro_numero_unificado = process_number[delimiter_index + 1 + len(self.__delimiter):]
+        digit_number = process_number[:delimiter_index - 1]
+        forum_number = process_number[delimiter_index + 1 + len(self.__delimiter):]
 
-        return numero_digito_unificado, foro_numero_unificado
+        return digit_number, forum_number
 
-    def enter_process_page(self, numero_digito_unificado, foro_numero_unificado):
-        input_numero_digito_unificado = self.__driver.find_element_by_id("numeroDigitoAnoUnificado")
-        input_foro_numero_unificado = self.__driver.find_element_by_id("foroNumeroUnificado")
+    def enter_process_page(self, digit_number, forum_number):
+        """
+        Enter the process page by filling the court website form
+        :param digit_number: The process digit number
+        :param forum_number:  The process forum number
+        :raises InvalidProcessNumberException:  If the process number composed by digit_number and forum_number is invalid
+        :raises PasswordProtectedProcess: If the process number composed by digit_number and forum_number is password protected
+        :return: True if is sucessfully executed (no exception is raised)
+        """
+        input_digit_number = self.__driver.find_element_by_id("numeroDigitoAnoUnificado")
+        input_forum_number = self.__driver.find_element_by_id("foroNumeroUnificado")
 
-        input_numero_digito_unificado.send_keys(numero_digito_unificado)
-        input_foro_numero_unificado.send_keys(foro_numero_unificado)
+        input_digit_number.send_keys(digit_number)
+        input_forum_number.send_keys(forum_number)
 
         self.__driver.find_element_by_name("pbEnviar").click()
 
@@ -45,13 +64,17 @@ class _Crawler:
         # process data
         try:
             self.__driver.find_element_by_id("popupModalDiv")
-            raise PasswordProtectedProcess(self.process_number)
+            raise PasswordProtectedProcessException(self.process_number)
         except selenium.common.exceptions.NoSuchElementException:
             pass  # popupModalDiv is not here, go on
 
         return True
 
     def extract_process_data(self):
+        """
+        Extracts data from a process
+        :return: A dict containing the extracted data
+        """
         data_table = self.__driver.find_element_by_xpath("/html/body/div/table[4]/tbody/tr/td/div[1]/table[2]/tbody")
 
         entries = data_table.find_elements_by_tag_name("tr")
@@ -67,6 +90,11 @@ class _Crawler:
         return process_data
 
     def extract_party(self, party_str):
+        """
+        Extracts a single party from the current process
+        :param party_str: Text of the party web element
+        :return: A dict containing the extracted data
+        """
         party_name, *raw_representants = party_str.split("\n")
 
         representants = []
@@ -84,6 +112,10 @@ class _Crawler:
         }
 
     def extract_parties(self):
+        """
+        Extracts all parties from the current process
+        :return: A dict containing the extracted data
+        """
         all_parties = {}
 
         # Some pages have only few parties and do not use the full table (tableTodasAsPartes) to display them,
@@ -110,7 +142,10 @@ class _Crawler:
         return all_parties
 
     def extract_transactions(self):
-
+        """
+        Extracts the current process transactions
+        :return: A dict containg the extracted data
+        """
         # Same logic of extract_parties
         try:
             self.__driver.find_element_by_id('linkmovimentacoes').click()
@@ -137,15 +172,21 @@ class _Crawler:
         return {"Movimentações": transactions}
 
     def run(self, process_number):
-        n, f = self.get_descriptors(process_number)
+        """
+        Executes all data gathering functions and group the results
+        :param process_number: Process number which will be crawled
+        :return: The process complete data
+        """
+        digit_number, forum_number = self.get_descriptors(process_number)
 
-        self.enter_process_page(n, f)
+        self.enter_process_page(digit_number, forum_number)
 
         data = self.extract_process_data()
         transactions = self.extract_transactions()
         parties = self.extract_parties()
 
         all_data = {**data, **parties, **transactions}
+
         return all_data
 
     def reboot(self):
@@ -158,12 +199,21 @@ class _Crawler:
         return self.__court
 
 
-class CrawlerWorker():
+class CrawlerWorker:
     def __init__(self, court):
+        """
+        Crawls a process and stores it locally
+        :param court: Court abbreviation (e.g. TJSP, TJMS)
+        """
         self.__crawler = _Crawler(court)
         self.__dao = ProcessDAO.get_instance()
 
     def run(self, process_number):
+        """
+        Fetch the process data from the court website or from the local database
+        :param process_number: Process number which will be crawled
+        :return: The process data
+        """
         process = self.__dao.fetch_process(self.__crawler.get_court(), process_number)
 
         if process is None:

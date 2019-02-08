@@ -7,16 +7,16 @@ import os
 import sys
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
-
-from main import CourtHandler, MainHandler
-from crawler.workers import _Crawler, CrawlerWorker
-from utils.exceptions import InvalidProcessNumberException, PasswordProtectedProcess
-from db.process_dao import ProcessDAO
 import config
+config.TEST = True
+from main import CourtHandler, MainHandler
+from crawler.workers import CrawlerWorker
+
+os.environ["ASYNC_TEST_TIMEOUT"] = "500"
+
 
 class TestGetProcess(testing.AsyncHTTPTestCase):
     def setUp(self):
-        os.environ["ASYNC_TEST_TIMEOUT"] = "500"
         super().setUp()
         self.crawlerTJSP = CrawlerWorker("TJSP")
         self.crawlerTJMS = CrawlerWorker("TJMS")
@@ -45,13 +45,14 @@ class TestGetProcess(testing.AsyncHTTPTestCase):
         ["TJMS", "0821901-51.2018.8.12.0001"],
         ["TJMS", "0000261-70.2010.8.12.0109"],
         ["TJMS", "0039263-02.2018.8.12.0001"],
-        ["TJMS", "0831704-34.2013.8.12.0001"]
+        ["TJMS", "0831704-34.2013.8.12.0001"],
+        ["TJSP", "0000000-00.0000.8.26.0000"],
+        ["TJMS", "1111111-11.1111.8.12.1111"],
     ])
     def test_get(self, court, process_number):
-        response = self.fetch('/get?court={}&process_number={}'.format(court, process_number), method="GET").body
+        response = self.fetch('/get_process?court={}&process_number={}'.format(court, process_number), method="GET").body
         response = json.loads(response)
         expected_response = self.get_crawler(court).run(process_number)
-
         self.assertEqual(sorted(expected_response.items()), sorted(response.items()))
 
     
