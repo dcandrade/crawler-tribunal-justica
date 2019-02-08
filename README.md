@@ -7,14 +7,14 @@
 ## Running
 Just run `docker-compose up` on the project root and access `localhost:3000` on your browser. You should wait a few seconds while the backend pools are created.
 
-## Optinal Configurations
+## Optional Configurations
 You can personalize the project by editing the following parameters on `config.py`:
-- POOL_SIZE: Amount of workers instances used per court (default=5)
-- USE_PROXY: Use proxy to anonimize the crawling process (defalt=False, current proxy services are not very trustable)
-- TEST: Flag to indicate of the project is running on test or production (default=False (production))
-- DB_NAME: Name of MongoDB database
-- COURTS: Python dict containing the info of each court
-- PROXY_SERVICES: Links to proxy services which provide a new proxy for every request
+- **POOL_SIZE**: Amount of workers instances used per court (default=5)
+- **USE_PROXY**: Use proxy to anonimize the crawling process (defalt=False, current proxy services are not very trustable)
+- **TEST**: Flag to indicate of the project is running on test or production (default=False (production))
+- **DB_NAME**: Name of MongoDB database
+- **COURTS**: Python dict containing the info of each court
+- **PROXY_SERVICES**: Links to proxy services which provide a new proxy for every request
 
 ## Stack
 ### Backend
