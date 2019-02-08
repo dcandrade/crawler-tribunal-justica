@@ -6,15 +6,8 @@ module.exports = function(app){
     app.get("/process", function(request, response){
         var court = request.query['court'];
         var number = request.query['number'];
-    
-        var options = {
-            host: "localhost",
-            port: 8888,
-            path: '/get?process_number='+number,
-            method: 'GET'
-        };
 
-        var url = 'http://localhost:8888/get?court='+court+'&process_number='+number;
+        var url = 'http://crawler:8888/get?court='+court+'&process_number='+number;
 
 
         axios.get(url).then(res => {

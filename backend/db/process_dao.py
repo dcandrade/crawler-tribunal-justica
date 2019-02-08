@@ -7,8 +7,8 @@ class ProcessDAO():
 
     def __init__(self):
         if ProcessDAO.__instance is None:
-            self.client = MongoClient()  # TODO: change for docker instance
-            self.db = self.client[config.DB_NAME]
+            self.__client = MongoClient("mongodb://mongodb:27017")  # TODO: change for docker instance
+            self.__db = self.__client[config.DB_NAME]
         else:
             raise EnvironmentError("ProcessDAO is a singleton class. Use get_instance instead.")
 
@@ -20,10 +20,10 @@ class ProcessDAO():
         return __instance
 
     def insert_process(self, court, process):
-        self.db[court].insert_one(process)
+        self.__db[court].insert_one(process)
 
     def fetch_process(self, court, process_number):
-        return self.db[court].find_one({"_id": process_number})
+        return self.__db[court].find_one({"_id": process_number})
 
     def close(self):
-        self.client.close()
+        self.__client.close()

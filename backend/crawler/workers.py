@@ -26,9 +26,11 @@ class _Crawler:
             prefs = {'profile.managed_default_content_settings.images': 2}  # no imgs
             chromeOptions.add_experimental_option("prefs", prefs)
             chromeOptions.add_argument("--headless")
-            self.__driver = webdriver.Chrome(options=chromeOptions)
+            chromeOptions.add_argument('--no-sandbox')
+            chromeOptions.add_argument('--disable-dev-shm-usage')
+            self.__driver = webdriver.Chrome("/usr/bin/chromedriver", options=chromeOptions)
         else:
-            self.__driver = webdriver.Chrome()
+            self.__driver = webdriver.Chrome("/usr/bin/chromedriver")
 
         self.__delimiter = config.COURTS[court]['delimiter']  # replace by static?
 
@@ -167,7 +169,6 @@ class _Crawler:
         parties = self.extract_parties()
 
         all_data = {**data, **parties, **transactions}
-        print(all_data)
         return all_data
 
     def reboot(self):
@@ -207,7 +208,7 @@ class CrawlerWorker():
 
 
 if __name__ == "__main__":
-    c = _Crawler("TJSP")
+    c = CrawlerWorker("TJSP")
     d = c.run("0946027-47.1999.8.26.0100")
     c.quit()
 

@@ -7,18 +7,18 @@ from crawler.workers import CrawlerWorker
 class CrawlerPool():
 
     def __init__(self, court, size=1):       
-        self.crawlers_executors = []
+        self.__crawlers_executors = []
         print("new crawler pool")
 
         for _ in range(size):
             crawler = CrawlerWorker(court)
             executor = ThreadPoolExecutor(max_workers=1)
-            self.crawlers_executors.append((crawler, executor))
+            self.__crawlers_executors.append((crawler, executor))
 
-        self.pool = cycle(self.crawlers_executors)
+        self.__pool = cycle(self.__crawlers_executors)
 
     def add_task(self, process_number):
-        crawler, executor = next(self.pool)
+        crawler, executor = next(self.__pool)
         print("sending")
         result_future = executor.submit(crawler.run, process_number=process_number)
         executor.submit(crawler.reboot)
@@ -27,6 +27,6 @@ class CrawlerPool():
         return result_future
 
     def quit(self):
-        for crawler, executor in self.crawlers_executors:
+        for crawler, executor in self.__crawlers_executors:
             crawler.quit()
             executor.shutdown()

@@ -6,11 +6,12 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 
-from crawler.workers import _Crawler
+from crawler.workers import _Crawler, CrawlerWorker
 from utils.exceptions import InvalidProcessNumberException, PasswordProtectedProcess
+from db.process_dao import ProcessDAO
+import config
 
-
-class TestPageLoad(unittest.TestCase):
+class TestCrawler(unittest.TestCase):
     def setUp(self):
         self.crawlerTJSP = _Crawler("TJSP")
         self.crawlerTJMS = _Crawler("TJMS")
@@ -100,6 +101,53 @@ class TestPageLoad(unittest.TestCase):
 
         self.assertEqual(sorted(reference_data.items()), sorted(all_data.items()))
 
+class TestCrawlerWorker(unittest.TestCase):
+        config.DB_NAME = "worker-test"
+        ProcessDAO.__instance = None # Resetting singleton
+        dao = ProcessDAO.get_instance()
+        db_client = dao._ProcessDAO__client 
+
+        def setUp(self):
+            TestCrawlerWorker.db_client.drop_database(config.DB_NAME)
+            self.crawlerTJSP = CrawlerWorker("TJSP")
+            self.crawlerTJMS = CrawlerWorker("TJMS")
+
+        def tearDown(self):
+            self.crawlerTJSP.quit()
+            self.crawlerTJMS.quit()
+
+        def get_crawler(self, court):
+            crawler = self.crawlerTJMS
+
+            if (court == "TJSP"):
+                crawler = self.crawlerTJSP
+
+            crawler.reboot()
+
+            return crawler
+
+        @parameterized.expand([
+            ["tests/data/0000261-70.2010.8.12.0109 - TJMS.json"],
+            ["tests/data/0025571-57.2011.8.26.0011 - TJSP.json"],
+            ["tests/data/0039263-02.2018.8.12.0001 - TJMS.json"],
+            ["tests/data/0821901-51.2018.8.12.0001 - TJMS.json"],
+            ["tests/data/0946027-47.1999.8.26.0100 - TJSP.json"],
+            ["tests/data/1002298-86.2015.8.26.0271 - TJSP.json"],
+            ["tests/data/0831704-34.2013.8.12.0001 - TJMS.json"],
+        ])
+        def test_acquisition(self, data_file):
+            process_number, court = data_file.strip('.json').split(" - ")
+            process_number = process_number.split("/")[2]  # remove folder name
+
+            db_data = TestCrawlerWorker.dao.fetch_process(court, process_number)
+
+            self.assertIsNone(db_data)
+
+            crawler = self.get_crawler(court)
+            data = crawler.run(process_number)
+            db_data = TestCrawlerWorker.dao.fetch_process(court, process_number)
+
+            self.assertEqual(sorted(data.items()), sorted(db_data.items()))
 
 if __name__ == "__main__":
     unittest.main(warnings="ignore")
