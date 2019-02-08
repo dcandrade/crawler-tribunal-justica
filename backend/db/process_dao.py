@@ -7,7 +7,11 @@ class ProcessDAO():
 
     def __init__(self):
         if ProcessDAO.__instance is None:
-            self.__client = MongoClient("mongodb://mongodb:27017")  # TODO: change for docker instance
+            if config.TEST:
+                self.__client = MongoClient()
+            else:
+                self.__client = MongoClient("mongodb://mongodb:27017")
+                
             self.__db = self.__client[config.DB_NAME]
         else:
             raise EnvironmentError("ProcessDAO is a singleton class. Use get_instance instead.")

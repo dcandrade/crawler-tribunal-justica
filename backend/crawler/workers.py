@@ -1,39 +1,18 @@
 import selenium
-from selenium import webdriver
-
+from utils.webdriver_factory import get_webdriver
 import config
+
 from utils.string_clean import clear_strings, clear_string, process_key
 from utils.exceptions import InvalidProcessNumberException, PasswordProtectedProcess
-from utils.proxies import get_random_proxy
 from db.process_dao import ProcessDAO
 
 
 class _Crawler:
 
-    def __init__(self, court, silent=True, use_proxy=config.USE_PROXY):
+    def __init__(self, court, silent=True):
         self.__court = court
-        chromeOptions = webdriver.ChromeOptions()
-
-        if use_proxy:
-            proxy = get_random_proxy()
-            proxy_ip = proxy['ip']
-            proxy_port = proxy['port']
-
-            chromeOptions.add_argument('--proxy-server=http://{}:{}'.format(proxy_ip, proxy_port))
-
-        if silent:
-            
-            prefs = {'profile.managed_default_content_settings.images': 2}  # no imgs
-            chromeOptions.add_experimental_option("prefs", prefs)
-            chromeOptions.add_argument("--headless")
-            chromeOptions.add_argument('--no-sandbox')
-            chromeOptions.add_argument('--disable-dev-shm-usage')
-            self.__driver = webdriver.Chrome("/usr/bin/chromedriver", options=chromeOptions)
-        else:
-            self.__driver = webdriver.Chrome("/usr/bin/chromedriver")
-
         self.__delimiter = config.COURTS[court]['delimiter']  # replace by static?
-
+        self.__driver = get_webdriver(silent)
         self.__driver.get(config.COURTS[court]['url'])
 
     def get_descriptors(self, process_number):
@@ -58,7 +37,7 @@ class _Crawler:
         errors = self.__driver.find_elements_by_id("mensagemRetorno")
         errors = [error.text for error in errors]
 
-        # The process number is invalid
+        # If true the process number is invalid
         if len(errors) > 0:
             raise InvalidProcessNumberException(self.process_number, errors)
 
@@ -158,8 +137,6 @@ class _Crawler:
         return {"Movimentações": transactions}
 
     def run(self, process_number):
-        print("Getting ", process_number)
-
         n, f = self.get_descriptors(process_number)
 
         self.enter_process_page(n, f)
@@ -205,12 +182,3 @@ class CrawlerWorker():
 
     def quit(self):
         self.__crawler.quit()
-
-
-if __name__ == "__main__":
-    c = CrawlerWorker("TJSP")
-    d = c.run("0946027-47.1999.8.26.0100")
-    c.quit()
-
-    from pprint import pprint
-    pprint(d)

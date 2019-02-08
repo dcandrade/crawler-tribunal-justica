@@ -42,7 +42,7 @@ def make_app():
         (r"/get", MainHandler),
         (r"/stop", StopHandler),
         (r"/courts", CourtHandler)
-    ], debug=True)
+    ], debug=False)
 
 
 if __name__ == "__main__":

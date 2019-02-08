@@ -22,12 +22,8 @@ class TestCrawler(unittest.TestCase):
 
     def get_crawler(self, court):
         crawler = self.crawlerTJMS
-
         if (court == "TJSP"):
             crawler = self.crawlerTJSP
-
-        crawler.reboot()
-
         return crawler
 
     @parameterized.expand([
