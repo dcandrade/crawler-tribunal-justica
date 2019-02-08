@@ -39,7 +39,10 @@ Each *backend* instance has *N=POOL_SIZE* workers. We deploy 3 *backend* instanc
 Every crawled process is stored locally to speedup the system and avoid multiple accesses to the same court page
 
 ## Tests
-Run `python tests/test_workers.py && python tests/test_api.py` on `backend` dir
+1. Install MongoDB
+2. Enter `backend` dir
+3. Run `pip install -r requirements.txt`
+4. Run `python tests/test_workers.py && python tests/test_api.py` on `backend` dir
 
 ## Next Features and Improvements
 1. Job to periodically check for updates on locally stored processes
