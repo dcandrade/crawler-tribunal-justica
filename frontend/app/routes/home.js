@@ -4,8 +4,8 @@ module.exports = function(app){
     app.get('/', function(request, response){
 
         var options = {
-            host: "crawler",
-            port: 8888,
+            host: "loadbalancer",
+            port: 8080,
             path: '/courts',
             method: 'GET'
         };

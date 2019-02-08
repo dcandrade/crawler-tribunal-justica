@@ -7,7 +7,7 @@ module.exports = function(app){
         var court = request.query['court'];
         var number = request.query['number'];
 
-        var url = 'http://crawler:8888/get?court='+court+'&process_number='+number;
+        var url = 'http://loadbalancer:8080/get?court='+court+'&process_number='+number;
 
 
         axios.get(url).then(res => {

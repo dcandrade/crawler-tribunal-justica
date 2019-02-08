@@ -11,9 +11,7 @@ COURTS = {
     }
 }
 
-POOL_SIZE = 1
-
+POOL_SIZE = 5
 DB_NAME = 'process-crawler'
-
 USE_PROXY = False
 PROXY_SERVICES = ['https://api.getproxylist.com/proxy', "https://gimmeproxy.com/api/getProxy"]

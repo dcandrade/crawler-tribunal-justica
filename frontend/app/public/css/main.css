@@ -812,7 +812,6 @@ legend {
 .s003 {
   min-height: 100vh;
   display: -ms-flexbox;
-  background-image: url("../images/watercolor-bg.jpg");
   display: flex;
   -ms-flex-pack: center;
       justify-content: center;

@@ -2,5 +2,6 @@ front/node_modules
 .ipynb_checkpoints
 .vscode
 .idea
+mongo
 **/__pycache__
 **/*.ipynb

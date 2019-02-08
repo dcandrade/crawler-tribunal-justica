@@ -7,12 +7,34 @@ services:
     container_name: 'mongodb'
     ports:
       - '27017:27017'
-
-  crawler:
-    build: ./backend/
-    container_name: "crawler-back"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./mongo:/data/db
     ports:
-      - '8888:8888'
+        - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null
+
+  crawler1:
+    build: ./backend/
+    container_name: 'crawler1'
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+  
+  crawler2:
+    build: ./backend/
+    container_name: 'crawler2'
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  crawler3:
+    build: ./backend/
+    container_name: 'crawler3'
     links:
       - mongodb
     depends_on:
@@ -23,5 +45,18 @@ services:
     container_name: 'crawler-front'
     ports:
       - '3000:3000'
-    depends_on:
-      - crawler
+
+  loadbalancer:
+      build: ./load-balancer/
+      container_name: 'loadbalancer'
+      depends_on:
+          - crawler1
+          - crawler2
+          - crawler3
+      links:
+          - web
+          - crawler1
+          - crawler2
+          - crawler3
+      ports:
+          - '8080:8080'
